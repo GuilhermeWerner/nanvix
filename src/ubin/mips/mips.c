@@ -1,26 +1,42 @@
 #include "mips.h"
+#include <unistd.h>
+#include <fcntl.h>
 
 /**
  * @brief Função principal do programa.
  *
  * @return 0 se a execução for bem-sucedida.
  */
-int main()
+int main(int argc, char *const argv[])
 {
-	int size = 5 * sizeof(int);
-	int *program = (int *)malloc(size);
+	int fp;
+	int size = 10;
+	int buffer[10];
 
-	mips_clean();
+	if (argc != 0)
+	{
+	}
 
-	// Teste de decodificação de instruções com bytecode implementado
-	program[0] = ADD;
-	program[1] = ADDI;
-	program[2] = SUB;
-	program[3] = LW;
-	program[4] = SW;
+	fp = open(argv[1], O_RDONLY);
 
-	mips_load(program, size);
+	if (fp < 0)
+	{
+		printf("Erro ao abrir o arquivo\n");
+		return 1;
+	}
+
+	if (read(fp, buffer, size) != size)
+	{
+		printf("Erro na leitura do arquivo\n");
+		close(fp);
+		return 1;
+	}
+
+	mips_load(buffer, size);
 	mips_exec();
+
+	close(fp);
+	mips_clean();
 
 	return 0;
 }
