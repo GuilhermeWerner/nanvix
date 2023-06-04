@@ -93,9 +93,6 @@ int mips_typeI_bytecode(int mnem, int rt, int rs, int imm)
 	case SLTIU:
 		bytecode |= mnem | (rs << 21) | (rt << 16) | (imm & 0xFFFF);
 		break;
-	case LUI:
-		bytecode |= mnem | (0 << 21) | (rt << 16) | (imm & 0xFFFF);
-		break;
 	case LW:
 		bytecode |= mnem | (rs << 21) | (rt << 16) | (imm & 0xFFFF);
 		break;

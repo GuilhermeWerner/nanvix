@@ -45,6 +45,7 @@ void mips_exec()
 	while (mips_counter < mips_memory_len)
 	{
 		inst = mips_memory_buffer[mips_counter];
+		mips_cycles++; // Instruction Fetch
 
 		mips_decode_inst(inst);
 
